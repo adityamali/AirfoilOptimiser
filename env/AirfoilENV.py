@@ -1,21 +1,29 @@
-from tkinter import *
+import gym
+import numpy as np
+from gymnasium import spaces
+
 from HybridCFDProxy import HybridCFDProxy
-from ParametricAirfoil import ParametricAirfoil
+from CSTAirfoil import CSTAirfoil
 from PersistentRewardSystem import PersistentRewardSystem
 
+class AirfoilENV(gym.Env):
+    """
+    Custom Environment for RL agent to modify airfoil shape and recieve rewards based on aerodynamic performance.
+    """
 
-class EnvMain:
-    def __init__(self):
-        self.root = Tk()
-        self.root.title("AirFoil Learner")
-        self.root.geometry("800x600")
-        self.root.mainloop()
+    def __init__(self, config=None):
+        super(AirfoilENV, self).__init__()
 
-        self.shape_generator = ParametricAirfoil()
+        self.config = {
+            # TODO: Define the standard configuration for the airfoil
+        }
+
+        self.airfoil = CSTAirfoil()
         self.simulator = HybridCFDProxy()
-        self.reward_calculator = PersistentRewardSystem()
+        self.reward_system = PersistentRewardSystem()
 
+        if config:
+            self.config.update(config)
+
+        
     
-
-if __name__ == "__main__":
-    EnvMain()
