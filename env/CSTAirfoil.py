@@ -1,2 +1,0 @@
-class CSTAirfoil:
-    pass
